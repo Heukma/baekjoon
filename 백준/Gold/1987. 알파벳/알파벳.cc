@@ -17,19 +17,18 @@ bool isvalid(int a, int b) {
 }
 void dfs(int a, int b, int visited[], int c) {
 	ans = max(ans, c);
-	int temp_visited[26];
-	copy(visited, visited + 26, temp_visited); 
-	temp_visited[map[a][b]] = 1;
+	visited[map[a][b]] = 1;
 	for (int i = 0; i < 4; i++) {
 		int tempa = a + ra[i];
 		int tempb = b + rb[i];
 		if (isvalid(tempa,tempb)) {
-			if (!temp_visited[map[tempa][tempb]]) {
+			if (!visited[map[tempa][tempb]]) {
 				//cout << "Tempa: " << tempa << ", Tempb: " << tempb <<", Map: "<<map[tempa][tempb] << '\n';
-				dfs(tempa, tempb, temp_visited, c+1);
+				dfs(tempa, tempb, visited, c+1);
 			}
 		}
 	}
+	visited[map[a][b]] = 0;
 }
 
 int main() {
