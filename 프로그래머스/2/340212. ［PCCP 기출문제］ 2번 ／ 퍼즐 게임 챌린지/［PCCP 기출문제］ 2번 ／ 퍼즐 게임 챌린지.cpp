@@ -25,21 +25,19 @@ long long howmuchtime(int level, vector<int> diffs, vector<int> times){
     return time;
 }
 void binary_search(long long time, long long limit, int level){
-        if(time>=limit){
-            b_min = level;
+        if(time>limit){
+            b_min = level + 1;
         }
         else{
-            b_max = level;
+            b_max = level - 1;
         }
 }
 int solution(vector<int> diffs, vector<int> times, long long limit) {
     int answer = 0;
-    while(b_min+1 < b_max){
+    while(b_min <= b_max){
         long long level = (b_min + b_max)/2;
         long long temp = howmuchtime(level,diffs,times);
         binary_search(temp,limit,level);
     }
-    if(howmuchtime(b_min,diffs,times) <= limit)
-        return b_min;
-    return b_max;
+    return b_min;
 }
