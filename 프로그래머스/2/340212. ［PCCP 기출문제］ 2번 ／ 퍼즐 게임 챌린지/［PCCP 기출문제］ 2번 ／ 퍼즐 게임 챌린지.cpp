@@ -34,11 +34,8 @@ void binary_search(long long time, long long limit, int level){
 }
 int solution(vector<int> diffs, vector<int> times, long long limit) {
     int answer = 0;
-    int t=1000;
-    while(1){
+    while(b_min+1 < b_max){
         long long level = (b_min + b_max)/2;
-        //cout << b_min << ' ' << b_max << '\n';
-        if(b_min+1 == b_max) break;
         long long temp = howmuchtime(level,diffs,times);
         binary_search(temp,limit,level);
     }
