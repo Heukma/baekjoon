@@ -11,33 +11,13 @@ using namespace std;
 int N, K;
 int alphabet[26] = {};
 vector <string> word;
+vector <int> per(21,0);
 string unused = "bdefghjklmopqrsuvwxyz";
-int ret = 0;
-void solve() {
-	int ans = 0;
-	for (int i = 0; i < word.size(); i++) {
-		int flag = 1;
-		for (int j = 0; j < word[i].length(); j++) {
-			if (alphabet[word[i][j] - 'a'] == 0) {
-				flag = 0;
-				break;
-			}
-		}
-		ans += flag;
+void printalpha() {
+	for (int i = 0; i < 26; i++) {
+		cout << alphabet[i] << ' ';
 	}
-	ret = max(ret, ans);
-}
-void DFS(int count, int ind) {
-	if (count == K - 5) {
-		solve();
-	}
-	else {
-		for (int i = ind; i <= unused.length(); i++) {
-			alphabet[unused[i] - 'a'] = 1;
-			DFS(count + 1, i+1);
-			alphabet[unused[i] - 'a'] = 0;
-		}
-	}
+	cout << '\n';
 }
 int main() {
 	cin >> N >> K;
@@ -54,7 +34,36 @@ int main() {
 		cout << "0";
 		return 0;
 	}
-	DFS(0, 0);
+	for (int i = 0; i < K - 5; i++) {
+		per[i] = 1;
+	}
+	int ans = 0;
+	sort(per.begin(), per.end());
+	do {
+		for (int i = 0; i < 21; i++) {
+			if (per[i]) {
+				alphabet[unused[i] - 'a'] = 1;
+			}
+		}
+		int tempans = 0;
+		for (int i = 0; i < word.size(); i++) {
+			int flag = 1;
+			for (int j = 0; j < word[i].size(); j++) {
+				if (!alphabet[word[i][j] - 'a']) {
+					flag = 0;
+					break;
+				}
+			}
+			tempans += flag;
+			
+		}
+		ans = max(ans, tempans);
+		for (int i = 0; i < 21; i++) {
+			if (per[i]) {
+				alphabet[unused[i] - 'a'] = 0;
+			}
+		}
+	} while (next_permutation(per.begin(), per.end()));
 
-	cout << ret;
+	cout << ans;
 }
