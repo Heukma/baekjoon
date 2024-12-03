@@ -16,13 +16,15 @@ void solve(int count) {
 	}
 	int max_num = -1;
 	int max_index = -1;
-	for (int i = 0; i <= count && i < v.size(); i++) {
+	for (int i = 0; i <= count; i++) {
+		if (i >= v.size()) break;
 		if (v[i] > max_num) {
 			max_num = v[i];
 			max_index = i;
 		}
 	}
-	if (max_num != -1) {
+	if (max_num == -1) solve(0);
+	else {
 		v.erase(v.begin() + max_index);
 		ans.push_back(max_num);
 		solve(count - max_index);
@@ -37,13 +39,6 @@ int main() {
 	}
 
 	cin >> S;
-	if (S >= N * (N - 1) / 2) {
-		sort(v.begin(), v.end(), greater<int>());
-		for (int i = 0; i < N; i++) {
-			cout << v[i] << ' ';
-		}
-		return 0;
-	}
 	solve(S);
 
 	for (int i = 0; i < N; i++) {
