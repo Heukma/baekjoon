@@ -54,6 +54,9 @@ long long ans(){
     return ans;
 }
 int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
     input_();
     for(int turn =0; turn< K; turn ++){
         // cout << v.size() << '\n';
@@ -61,11 +64,13 @@ int main(){
             int tempa = v[i].a;
             int tempb = v[i].b;
         
-            for(int j=0;j<v[i].s;j++){
-                tempa +=  ra[v[i].dir];
-                tempb +=  rb[v[i].dir];
-                isvalid(tempa,tempb);
-            }
+            // for(int j=0;j<v[i].s;j++){
+            //     tempa +=  ra[v[i].dir];
+            //     tempb +=  rb[v[i].dir];
+            //     isvalid(tempa,tempb);
+            // }
+            tempa = (tempa + ra[v[i].dir] * v[i].s % N + N) % N;
+            tempb = (tempb + rb[v[i].dir] * v[i].s % N + N) % N;
             v[i].a = tempa;
             v[i].b = tempb;
             // cout <<"temp: " <<tempa << ' ' << tempb << '\n';
